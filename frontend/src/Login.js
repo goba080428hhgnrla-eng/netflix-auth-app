@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Login = () => {
+const Login = ({ setToken }) => {
     const [isRegistering, setIsRegistering] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -21,7 +21,7 @@ const Login = () => {
                 setMessage('Registro exitoso. Ahora puedes iniciar sesión.');
             } else {
                 setMessage('Inicio de sesión exitoso.');
-                console.log('Token recibido:', response.data);
+                setToken(response.data.access); // Guarda el token JWT
             }
         } catch (error) {
             setMessage('Hubo un error. Verifica tus datos.');
@@ -51,7 +51,7 @@ const Login = () => {
             </form>
             <p>{message}</p>
             <p>
-                {isRegistering ? '¿Ya tienes cuenta?' : '¿No tienes cuenta? '}{' '}
+                {isRegistering ? '¿Ya tienes cuenta? ' : '¿No tienes cuenta? '}
                 <span 
                     onClick={() => setIsRegistering(!isRegistering)}
                     style={{ color: '#e50914', cursor: 'pointer' }}
